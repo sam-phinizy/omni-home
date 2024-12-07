@@ -12,10 +12,54 @@
     <main>
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div class="px-4 py-6 sm:px-0">
-                <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">
-                    <div class="p-4">
-                        <h2 class="text-xl font-semibold">Welcome, {{ user.username }}!</h2>
-                        <!-- Add your dashboard content here -->
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h2 class="text-lg leading-6 font-medium text-gray-900">
+                            Recently Added Items
+                        </h2>
+                    </div>
+                    <div class="border-t border-gray-200">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                            <ul role="list" class="divide-y divide-gray-200">
+                                {% for item in latest_items %}
+                                <li>
+                                    <div class="px-4 py-4 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-medium text-indigo-600 truncate">
+                                                    {{ item.name }}
+                                                </p>
+                                                <p class="mt-1 text-sm text-gray-500">
+                                                    Location: {{ item.location.get_full_path }}
+                                                </p>
+                                            </div>
+                                            <div class="ml-4 flex-shrink-0">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Qty: {{ item.quantity }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 sm:flex sm:justify-between">
+                                            <div class="sm:flex">
+                                                <p class="flex items-center text-sm text-gray-500">
+                                                    Added by {{ item.created_by.email }}
+                                                </p>
+                                            </div>
+                                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                <p>
+                                                    Added {{ item.created_at|timesince }} ago
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% empty %}
+                                <li class="px-4 py-4 sm:px-6 text-gray-500 text-center">
+                                    No items have been added yet.
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

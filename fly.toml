@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for omni-home on 2024-12-07T13:46:31-05:00
+# fly.toml app configuration file generated for omni-home on 2024-12-07T16:27:18-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -26,11 +26,8 @@ console_command = '/code/manage.py shell'
   cpus = 1
 
 [[statics]]
-  guest_path = '/code/static'
-  url_prefix = '/static/'
-
-
+  guest_path = '/code/staticfiles'
+  url_prefix = '/static'
 
 [deploy]
   release_command = 'python manage.py migrate --noinput'
-

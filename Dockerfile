@@ -4,7 +4,10 @@ FROM python:${PYTHON_VERSION}
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /code
 
 WORKDIR /code
@@ -14,6 +17,7 @@ COPY pyproject.toml uv.lock /code/
 RUN uv export > requirements.txt && pip install -r requirements.txt
 COPY . /code
 
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

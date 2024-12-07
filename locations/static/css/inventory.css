@@ -1,0 +1,54 @@
+.inventory-list {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Desktop view - grid layout */
+@media (min-width: 768px) {
+    .inventory-list {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+/* Mobile view - card layout */
+.inventory-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inventory-card__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.inventory-card__details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.inventory-card__quantity {
+    background: #f0f0f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.inventory-card__location {
+    color: #666;
+}
+
+.inventory-card__type {
+    color: #666;
+    font-size: 0.9rem;
+    border-top: 1px solid #eee;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+} 

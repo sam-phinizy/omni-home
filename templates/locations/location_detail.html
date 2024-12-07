@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">{{ location.name }}</h1>
+        <div class="space-x-4">
+            <a href="{% url 'location_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Back to List
+            </a>
+            <a href="{% url 'location_edit' location.pk %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Edit Location
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-gray-600 text-sm">Address</h3>
+                <p class="text-gray-900">{{ location.address }}</p>
+            </div>
+            <div>
+                <h3 class="text-gray-600 text-sm">City</h3>
+                <p class="text-gray-900">{{ location.city }}</p>
+            </div>
+            <div>
+                <h3 class="text-gray-600 text-sm">State</h3>
+                <p class="text-gray-900">{{ location.state }}</p>
+            </div>
+            <div>
+                <h3 class="text-gray-600 text-sm">Postal Code</h3>
+                <p class="text-gray-900">{{ location.postal_code }}</p>
+            </div>
+            <div>
+                <h3 class="text-gray-600 text-sm">Country</h3>
+                <p class="text-gray-900">{{ location.country }}</p>
+            </div>
+        </div>
+
+        {% if location.notes %}
+        <div class="mt-6">
+            <h3 class="text-gray-600 text-sm">Notes</h3>
+            <p class="text-gray-900">{{ location.notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

@@ -36,6 +36,21 @@
         </div>
     </nav>
 
+    {% if user.is_authenticated %}
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8">
+                <a href="{% url 'inventory:list' %}" 
+                   class="{% if request.resolver_match.app_name == 'inventory' %}border-indigo-500 text-gray-900{% else %}border-transparent text-gray-500{% endif %} 
+                          inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    Inventory
+                </a>
+                <!-- Add more section links here as needed -->
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
     {% block content %}
     {% endblock %}
 </body>

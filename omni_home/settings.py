@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "users",
     "locations",
     "inventory",
+    "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -151,3 +153,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"

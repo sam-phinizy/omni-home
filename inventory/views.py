@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
 from django.db.models import Q
 from .models import Inventory
 from locations.models import Location
+from .forms import InventoryForm
 
 
 class InventoryDetailView(DetailView):
@@ -85,3 +87,21 @@ class InventoryListView(ListView):
         context["selected_location"] = self.request.GET.get("location", "")
         context["search_query"] = self.request.GET.get("search", "")
         return context
+
+
+@login_required
+def inventory_edit(request, pk):
+    item = get_object_or_404(Inventory, pk=pk)
+    if request.method == "POST":
+        form = InventoryForm(request.POST, instance=item)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.updated_by = request.user
+            item.save()
+            form.save_m2m()  # Save many-to-many relationships
+            return redirect("inventory:detail", item_number=item.pk)
+    else:
+        form = InventoryForm(instance=item)
+    return render(
+        request, "inventory/inventory_edit.html", {"form": form, "item": item}
+    )

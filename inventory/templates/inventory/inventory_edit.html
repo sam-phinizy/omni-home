@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">Edit {{ item.name }}</h1>
+    </div>
+    
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="mt-6 flex items-center justify-end gap-x-4">
+                    <a href="{% url 'inventory:detail' item.id %}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

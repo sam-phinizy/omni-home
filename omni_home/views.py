@@ -6,7 +6,7 @@ from inventory.models import Inventory
 @login_required
 def dashboard(request):
     latest_items = Inventory.objects.select_related(
-        'location', 'created_by'
+        'location', 'created_by', 'item_type'
     ).order_by('-created_at')[:10]
     
     return render(request, 'dashboard.html', {

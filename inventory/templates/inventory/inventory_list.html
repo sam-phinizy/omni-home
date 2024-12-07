@@ -21,37 +21,52 @@
     <!-- Filter Form -->
     <div class="mt-4 bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
-            <form method="get" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
-                <div class="w-full sm:w-1/4">
-                    <label for="search" class="block text-sm font-medium text-gray-700">Search</label>
-                    <div class="mt-1">
-                        <input type="text" name="search" id="search" value="{{ search_query }}"
-                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                            placeholder="Search by name or description">
+            <form method="get" class="space-y-4 sm:space-y-0 sm:flex sm:items-start sm:gap-4">
+                <div class="flex-1 sm:flex sm:space-x-4">
+                    <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                        <label for="search" class="block text-sm font-medium text-gray-700">Search</label>
+                        <div class="mt-1">
+                            <input type="text" name="search" id="search" value="{{ search_query }}"
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                placeholder="Search by name or description">
+                        </div>
+                    </div>
+
+                    <div class="w-full sm:w-1/4 mb-4 sm:mb-0">
+                        <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                        <select id="location" name="location"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="">All Locations</option>
+                            {% for location in locations %}
+                            <option value="{{ location.id }}" {% if selected_location == location.id|stringformat:"s" %}selected{% endif %}>
+                                {{ location.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="w-full sm:w-1/4">
+                        <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
+                        <select id="type" name="type"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="">All Types</option>
+                            {% for type in inventory_types %}
+                            <option value="{{ type.id }}" {% if selected_type == type.id|stringformat:"s" %}selected{% endif %}>
+                                {{ type.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
 
-                <div class="w-full sm:w-1/4">
-                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-                    <select id="location" name="location"
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="">All Locations</option>
-                        {% for location in locations %}
-                        <option value="{{ location.id }}" {% if selected_location == location.id|stringformat:"s" %}selected{% endif %}>
-                            {{ location.name }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="w-full sm:w-auto sm:flex-none sm:self-end">
+                <div class="flex items-center justify-between space-x-2 sm:flex-col sm:justify-end sm:pt-7">
                     <button type="submit"
-                        class="mt-6 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        class="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm">
                         Apply Filters
                     </button>
                     {% if search_query or selected_location %}
                     <a href="{% url 'inventory:list' %}"
-                        class="mt-2 sm:mt-0 sm:ml-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-2">
                         Clear Filters
                     </a>
                     {% endif %}
@@ -60,56 +75,52 @@
         </div>
     </div>
 
-    <div class="mt-8 flex flex-col">
-        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Types</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for item in items %}
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                    <div class="flex items-center space-x-3">
-                                        <a href="{% url 'inventory:detail' item_number=item.id %}" class="text-indigo-600 hover:text-indigo-900">
-                                            {{ item.name }}
-                                        </a>
-                                        <a href="{% url 'inventory:inventory_edit' pk=item.id %}" 
-                                           class="text-gray-400 hover:text-gray-500">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.location }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {% for type in item.types.all %}
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-1">
-                                            {{ type.name }}
-                                        </span>
-                                    {% endfor %}
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.quantity }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.updated_at|date:"M d, Y" }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="px-3 py-4 text-sm text-gray-500 text-center">No inventory items found.</td>
-                            </tr>
+    <div class="mt-8 -mx-4 sm:mx-0 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Types</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                    {% for item in items %}
+                    <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                            <div class="flex items-center space-x-3">
+                                <a href="{% url 'inventory:detail' item_number=item.id %}" class="text-indigo-600 hover:text-indigo-900">
+                                    {{ item.name }}
+                                </a>
+                                <a href="{% url 'inventory:inventory_edit' pk=item.id %}" 
+                                   class="text-gray-400 hover:text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.location }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            {% for type in item.types.all %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-1">
+                                    {{ type.name }}
+                                </span>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.quantity }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.updated_at|date:"M d, Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-3 py-4 text-sm text-gray-500 text-center">No inventory items found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 

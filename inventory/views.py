@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
 from django.db.models import Q
-from .models import Inventory
+from .models import Inventory, InventoryType
 from locations.models import Location
 from .forms import InventoryForm
 
@@ -86,6 +86,8 @@ class InventoryListView(ListView):
         context["locations"] = locations
         context["selected_location"] = self.request.GET.get("location", "")
         context["search_query"] = self.request.GET.get("search", "")
+        context["inventory_types"] = InventoryType.objects.all().order_by("name")
+        context["selected_type"] = self.request.GET.get("type", "")
         return context
 
 

@@ -26,9 +26,9 @@
                                     <div class="px-4 py-4 sm:px-6">
                                         <div class="flex items-center justify-between">
                                             <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-indigo-600 truncate">
+                                                <a href="{% url 'inventory:detail' item_number=item.id %}" class="text-sm font-medium text-indigo-600 truncate hover:text-indigo-900">
                                                     {{ item.name }}
-                                                </p>
+                                                </a>
                                                 <p class="mt-1 text-sm text-gray-500">
                                                     Location: {{ item.location.get_full_path }}
                                                     <span class="ml-2 text-xs text-gray-400">

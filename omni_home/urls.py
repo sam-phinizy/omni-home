@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('inventory.urls')),  # Include inventory URLs
 ]

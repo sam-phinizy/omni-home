@@ -26,8 +26,8 @@ SECRET_KEY = "django-insecure-ym9b2x^x%at6i%q*@ym0#^_eo0hi#ou=tx-(0l$x&6hi(mc_pp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["omni-home.fly.dev"]
+CSRF_TRUSTED_ORIGINS = ["https://omni-home.fly.dev"]
 
 # Application definition
 
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
-    'locations',
+    "locations",
     "inventory",
 ]
 
@@ -129,5 +129,5 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/accounts/login/"

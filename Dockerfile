@@ -11,9 +11,10 @@ WORKDIR /code
 
 RUN pip install uv
 COPY pyproject.toml uv.lock /code/
-RUN uv sync
+RUN uv export > requirements.txt && pip install -r requirements.txt
 COPY . /code
+
 
 EXPOSE 8000
 
-CMD ["gunicorn","--bind",":8000","--workers","2","omni_home.wsgi"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "omni_home.wsgi"]

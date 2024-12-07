@@ -1,20 +1,29 @@
 from django.db import models
 
 
-class Floor(models.IntegerChoices):
-    BASEMENT = -1, "Basement"
-    FIRST = 1, "First Floor"
-    SECOND = 2, "Second Floor"
-    THIRD = 3, "Third Floor"
-    ATTIC = 4, "Attic"
-
-
 class Location(models.Model):
-    name = models.CharField(max_length=100)
-    floor = models.IntegerField(choices=Floor.choices)
-
-    def __str__(self):
-        return f"{self.name} ({self.get_floor_display()})"
+    name = models.CharField(max_length=255)
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["floor", "name"]
+        ordering = ['name']
+
+    def __str__(self):
+        if self.parent:
+            return f"{self.name} (in {self.parent})"
+        return self.name
+
+    def get_full_path(self):
+        """Returns the full path of nested locations (e.g., 'Basement > Rear > Box 1')"""
+        if self.parent:
+            return f"{self.parent.get_full_path()} > {self.name}"
+        return self.name

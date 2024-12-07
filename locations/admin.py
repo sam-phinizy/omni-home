@@ -3,6 +3,7 @@ from .models import Location
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'floor')
-    list_filter = ('floor',)
-    search_fields = ('name',) 
+    list_display = ['name', 'parent', 'get_full_path', 'created_at']
+    list_filter = ['parent', 'created_at']
+    search_fields = ['name', 'description', 'parent__name']
+    readonly_fields = ['created_at', 'updated_at'] 

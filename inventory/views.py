@@ -105,3 +105,21 @@ def inventory_edit(request, pk):
     return render(
         request, "inventory/inventory_edit.html", {"form": form, "item": item}
     )
+
+
+@login_required
+def inventory_create(request):
+    if request.method == "POST":
+        form = InventoryForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.updated_by = request.user
+            item.save()
+            form.save_m2m()  # Save many-to-many relationships
+            return redirect("inventory:detail", item_number=item.pk)
+    else:
+        form = InventoryForm()
+    return render(
+        request, "inventory/inventory_edit.html", {"form": form, "is_create": True}
+    )

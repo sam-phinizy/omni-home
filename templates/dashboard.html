@@ -32,7 +32,9 @@
                                                 <p class="mt-1 text-sm text-gray-500">
                                                     Location: {{ item.location.get_full_path }}
                                                     <span class="ml-2 text-xs text-gray-400">
-                                                        {{ item.item_type.name }}
+                                                        {% for type in item.types.all %}
+                                                            {{ type.name }}{% if not forloop.last %}, {% endif %}
+                                                        {% endfor %}
                                                     </span>
                                                 </p>
                                             </div>

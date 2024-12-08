@@ -38,6 +38,6 @@ If you're interested in running this yourself, I'd be happy to help! A general g
 
 
 # Screenshots
-![Dashboard](./docs/images/dashboard.png)
-![Item Detail](./docs/images/item-detail.png)
-![Location Detail](./docs/images/location-detail.png)
+![Dashboard](./docs/imgs/dashboard.png)
+![Item Detail](./docs/imgs/item-detail.png)
+![Location Detail](./docs/imgs/location-detail.png)

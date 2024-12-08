@@ -63,7 +63,7 @@
                                                     {{ item.name }}
                                                 </a>
                                                 <p class="mt-1 text-sm text-gray-500">
-                                                    Location: {{ item.location.get_full_path }}
+                                                    Location: {{ item.location.get_full_path|join:" > " }}
                                                     <span class="ml-2 text-xs text-gray-400">
                                                         {% for type in item.types.all %}
                                                             {{ type.name }}{% if not forloop.last %}, {% endif %}

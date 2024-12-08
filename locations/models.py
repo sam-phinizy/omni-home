@@ -23,7 +23,10 @@ class Location(models.Model):
         return self.name
 
     def get_full_path(self):
-        """Returns the full path of nested locations (e.g., 'Basement > Rear > Box 1')"""
-        if self.parent:
-            return f"{self.parent.get_full_path()} > {self.name}"
-        return self.name
+        """Returns a list of strings representing the full path of nested locations."""
+        path = []
+        current_location = self
+        while current_location:
+            path.append(current_location.name)
+            current_location = current_location.parent
+        return path[::-1]  # Reverse the list to get the correct order

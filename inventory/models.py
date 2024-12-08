@@ -9,7 +9,7 @@ class InventoryType(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -18,12 +18,10 @@ class InventoryType(models.Model):
 class Inventory(models.Model):
     name = models.CharField(max_length=255)
     location = models.ForeignKey(
-        "locations.Location",
-        on_delete=models.CASCADE,
-        related_name="inventory_items"
+        "locations.Location", on_delete=models.CASCADE, related_name="inventory_items"
     )
     types = models.ManyToManyField(InventoryType, related_name="items")
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=1)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -31,13 +29,13 @@ class Inventory(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='created_items'
+        related_name="created_items",
     )
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='updated_items'
+        related_name="updated_items",
     )
 
     class Meta:

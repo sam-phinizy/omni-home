@@ -25,5 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('inventory.urls')),  # Include inventory URLs
+    path('inventory/', include('inventory.urls')),  # Add namespace here
+    path('locations/', include('locations.urls', namespace='locations')),
 ]

@@ -73,6 +73,11 @@
                           inline-flex items-center px-1 py-4 sm:py-1 border-l-4 sm:border-l-0 sm:border-b-2 text-sm font-medium">
                     Inventory
                 </a>
+                <a href="{% url 'locations:list' %}" 
+                   class="{% if request.resolver_match.app_name == 'locations' %}border-indigo-500 text-gray-900{% else %}border-transparent text-gray-500{% endif %} 
+                          inline-flex items-center px-1 py-4 sm:py-1 border-l-4 sm:border-l-0 sm:border-b-2 text-sm font-medium">
+                    Locations
+                </a>
             </div>
         </div>
     </nav>

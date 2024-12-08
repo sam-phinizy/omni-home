@@ -9,8 +9,8 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
-                        <a href="{% url 'location_list' %}" class="{% if 'location' in request.resolver_match.url_name %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">Locations</a>
-                        <a href="{% url 'inventory_list' %}" class="{% if 'inventory' in request.resolver_match.url_name %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">Inventory</a>
+                        <a href="{% url 'locations:list' %}" class="{% if 'location' in request.resolver_match.url_name %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">Locations</a>
+                        <a href="{% url 'inventory:list' %}" class="{% if 'inventory' in request.resolver_match.url_name %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">Inventory</a>
                     </div>
                 </div>
             </div>

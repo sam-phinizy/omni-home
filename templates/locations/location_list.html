@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Locations</h1>
-        <a href="{% url 'location_create' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{% url 'locations:create' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add Location
         </a>
     </div>
@@ -24,7 +24,7 @@
                 {% for location in locations %}
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{% url 'location_detail' location.pk %}" class="text-blue-600 hover:text-blue-900">
+                        <a href="{% url 'locations:detail' location.pk %}" class="text-blue-600 hover:text-blue-900">
                             {{ location.name }}
                         </a>
                     </td>
@@ -32,7 +32,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ location.state }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ location.country }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="{% url 'location_edit' location.pk %}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        <a href="{% url 'locations:edit' location.pk %}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}

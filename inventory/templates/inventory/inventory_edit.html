@@ -38,17 +38,55 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get the location parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const locationId = urlParams.get('location');
         
-        // If we have a location parameter and this is a create form
-        if (locationId && {% if is_create %}true{% else %}false{% endif %}) {
-            // Find the location select field
-            const locationSelect = document.querySelector('#id_location');
-            if (locationSelect) {
-                // Set the value
-                locationSelect.value = locationId;
+        // Only pre-fill if this is a create form
+        if ({% if is_create %}true{% else %}false{% endif %}) {
+            // Pre-fill name (add "Copy of" if it's from an existing item)
+            const name = urlParams.get('name');
+            if (name) {
+                const nameField = document.querySelector('#id_name');
+                if (nameField) {
+                    nameField.value = `Copy of ${decodeURIComponent(name)}`;
+                }
+            }
+
+            // Pre-fill location
+            const location = urlParams.get('location');
+            if (location) {
+                const locationField = document.querySelector('#id_location');
+                if (locationField) {
+                    locationField.value = location;
+                }
+            }
+
+            // Pre-fill quantity
+            const quantity = urlParams.get('quantity');
+            if (quantity) {
+                const quantityField = document.querySelector('#id_quantity');
+                if (quantityField) {
+                    quantityField.value = quantity;
+                }
+            }
+
+            // Pre-fill description
+            const description = urlParams.get('description');
+            if (description) {
+                const descriptionField = document.querySelector('#id_description');
+                if (descriptionField) {
+                    descriptionField.value = decodeURIComponent(description);
+                }
+            }
+
+            // Pre-fill types (multi-select)
+            const types = urlParams.getAll('types');
+            if (types.length > 0) {
+                const typesField = document.querySelector('#id_types');
+                if (typesField) {
+                    Array.from(typesField.options).forEach(option => {
+                        option.selected = types.includes(option.value);
+                    });
+                }
             }
         }
     });

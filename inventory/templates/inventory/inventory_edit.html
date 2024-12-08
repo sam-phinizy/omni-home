@@ -35,4 +35,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the location parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationId = urlParams.get('location');
+        
+        // If we have a location parameter and this is a create form
+        if (locationId && {% if is_create %}true{% else %}false{% endif %}) {
+            // Find the location select field
+            const locationSelect = document.querySelector('#id_location');
+            if (locationSelect) {
+                // Set the value
+                locationSelect.value = locationId;
+            }
+        }
+    });
+</script>
 {% endblock %} 

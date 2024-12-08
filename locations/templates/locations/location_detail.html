@@ -33,7 +33,16 @@
             {% endif %}
 
             <div class="border-t border-gray-200 pt-6">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Inventory Items</h3>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Inventory Items</h3>
+                    <a href="{% url 'inventory:create' %}?location={{ location.id }}"
+                       class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Add Item
+                    </a>
+                </div>
                 <div class="mt-4">
                     {% if location.inventory_items.exists %}
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">

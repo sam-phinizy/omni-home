@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+            <h1 class="text-3xl font-bold text-gray-900">{{ location.name }}</h1>
+            {% if location.parent %}
+            <p class="mt-2 text-sm text-gray-700">Located in: {{ location.parent.name }}</p>
+            {% endif %}
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-4">
+            <a href="{% url 'locations:list' %}" 
+               class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Back to List
+            </a>
+            <a href="{% url 'locations:edit' location.id %}"
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Edit Location
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-8 bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            {% if location.description %}
+            <div class="mb-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Description</h3>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>{{ location.description }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="border-t border-gray-200 pt-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Inventory Items</h3>
+                <div class="mt-4">
+                    {% if location.inventory_items.exists %}
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Types</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                {% for item in location.inventory_items.all %}
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm">
+                                        <a href="{% url 'inventory:detail' item_number=item.id %}" class="text-indigo-600 hover:text-indigo-900">
+                                            {{ item.name }}
+                                        </a>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.quantity }}</td>
+                                    <td class="px-3 py-4 text-sm text-gray-500">
+                                        {% for type in item.types.all %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-1">
+                                            {{ type.name }}
+                                        </span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-sm text-gray-500">No inventory items in this location.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if location.children.exists %}
+            <div class="border-t border-gray-200 pt-6 mt-6">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Sub-locations</h3>
+                <div class="mt-4">
+                    <ul class="divide-y divide-gray-200">
+                        {% for sublocation in location.children.all %}
+                        <li class="py-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-1 min-w-0">
+                                    <a href="{% url 'locations:detail' sublocation.id %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-900">
+                                        {{ sublocation.name }}
+                                    </a>
+                                    {% if sublocation.description %}
+                                    <p class="text-sm text-gray-500">{{ sublocation.description|truncatewords:30 }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="inline-flex items-center text-sm text-gray-500">
+                                    {{ sublocation.inventory_items.count }} items
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

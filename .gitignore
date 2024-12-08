@@ -12,5 +12,6 @@ wheels/
 node_modules/
 *.sqlite3
 *.db
+.vscode
 .env
 *.sqlite

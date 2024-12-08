@@ -42,7 +42,7 @@
             Inventory Items
           </h3>
           <a
-            href="{% url 'inventory:create' %}?location={{ location.id }}"
+            href="{% url 'inventory:create' %}?location={{ location.id }}&return_url={% url 'locations:detail' location.id|urlencode %}"
             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             <svg

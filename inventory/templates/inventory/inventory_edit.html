@@ -24,6 +24,7 @@
         <div class="px-4 py-5 sm:p-6 space-y-6">
             <form method="post">
                 {% csrf_token %}
+                <input type="hidden" name="return_url" value="{{ request.GET.return_url }}">
                 {{ form|crispy }}
                 <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 sm:gap-x-4">
                     <button type="submit" 

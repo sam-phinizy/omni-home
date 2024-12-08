@@ -119,9 +119,27 @@ def inventory_create(request):
             item.updated_by = request.user
             item.save()
             form.save_m2m()  # Save many-to-many relationships
+            
+            # Check for return URL
+            return_url = request.POST.get('return_url')
+            if return_url:
+                return redirect(return_url)
             return redirect("inventory:detail", item_number=item.pk)
     else:
         form = InventoryForm()
+        
+        # Pre-fill location if provided
+        location_id = request.GET.get('location')
+        if location_id:
+            try:
+                location = Location.objects.get(id=location_id)
+                form.initial['location'] = location
+            except Location.DoesNotExist:
+                pass
+                
     return render(
-        request, "inventory/inventory_edit.html", {"form": form, "is_create": True}
+        request, "inventory/inventory_edit.html", {
+            "form": form, 
+            "is_create": True,
+        }
     )

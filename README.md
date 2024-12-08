@@ -37,3 +37,7 @@ If you're interested in running this yourself, I'd be happy to help! A general g
 4. Profit!
 
 
+# Screenshots
+![Dashboard](./docs/images/dashboard.png)
+![Item Detail](./docs/images/item-detail.png)
+![Location Detail](./docs/images/location-detail.png)
